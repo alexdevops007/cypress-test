@@ -1,9 +1,8 @@
 // @ts-check
 describe("home page", () => {
-  const baseUrl = "https://practice.expandtesting.com/notes/app";
   beforeEach(() => {
     // Visit the home page before each test
-    cy.visit(baseUrl); // Update with your application's URL
+    cy.visit("/"); // Update with your application's URL
   });
 
   // Grouping tests related to title verification

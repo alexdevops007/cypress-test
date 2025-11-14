@@ -1,21 +1,25 @@
 describe('Login Page Tests', () => {
-  const baseUrl = 'https://practice.expandtesting.com/notes/app/login';
 
   beforeEach(() => {
     // Visit the login page before each test
-    cy.visit(baseUrl);
+    cy.visit("/login");
   });
 
   // Test case: Verify that a user can log in with valid credentials
-  it.only('should allow a user to log in with valid credentials', () => {
-    cy.login('egec.rdc1@gmail.com', 'Edmonton001');
-    cy.get('[data-testid="home"]').contains('MyNotes')
+  it('should allow a user to log in with valid credentials', () => {
+    cy.fixture('user').then((user) => {
+      cy.login(user.validUser.email, user.validUser.password);
+      cy.get('[data-testid="home"]').contains('MyNotes').should('be.visible');
+    });
+    
   })
 
   // Test case: Verify that an error message is displayed for invalid credentials
   it('should display an error message for invalid credentials', () => {
-    cy.login('egec.rdc1@gmail.com', 'wrongpassword');
-    cy.get('[data-testid="alert-message"]').should('be.visible').and('have.text', 'Incorrect email address or password');
+    cy.fixture('user').then((user) => {
+      cy.login(user.invalidUser.email, user.invalidUser.password);
+      cy.get('[data-testid="alert-message"]').should('be.visible').and('have.text', 'Incorrect email address or password');
+    });
   });
 
   it('should display an error message for invalid email and password require', () => {

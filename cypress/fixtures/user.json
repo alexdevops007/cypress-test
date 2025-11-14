@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "email": "egec.rdc1@gmail.com",
+    "password": "Edmonton001"
+  },
+  "invalidUser": {
+    "email": "egec@gmail.com",
+    "password": "WrongPassword"
+  }
+}
