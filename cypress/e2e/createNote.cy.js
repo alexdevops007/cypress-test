@@ -60,4 +60,40 @@ describe("creation and verification of note", () => {
       'div:nth-child(2) > [data-testid="note-card"] > div.card-footer > [data-testid="toggle-note-switch"]'
     ).should("have.class", "form-check-input");
   });
+
+  it("create a note in the Home without checking the completed checkbox and verify if it is presente", () => {
+    cy.get('[data-testid="note-category"]').select("Home");
+    cy.get('[data-testid="note-title"]').click();
+    cy.get('[data-testid="note-title"]').type("Troisième note sans cocher");
+    cy.get('[data-testid="note-description"]').click();
+    cy.get('[data-testid="note-description"]').type(
+      "Ici c'est la troisième note sans cocher. Ce n'est pas très important. Merci"
+    );
+    cy.get('[data-testid="note-submit"]').click();
+
+    // Verify note in All category
+    cy.get('[data-testid="category-all"] span').click();
+    cy.get(
+      'div:nth-child(2) > [data-testid="note-card"] > [data-testid="note-card-title"]'
+    )
+      .should("be.visible")
+      .and("have.text", "Troisième note sans cocher");
+
+    // Verify note in Home category
+    cy.get('[data-testid="category-home"] span:nth-child(1)').click();
+    cy.get(
+      'div:nth-child(2) > [data-testid="note-card"] > [data-testid="note-card-title"]'
+    )
+      .should("be.visible")
+      .and("have.text", "Troisième note sans cocher");
+    cy.get(
+      'div:nth-child(2) > [data-testid="note-card"] > div.card-body > [data-testid="note-card-description"]'
+    ).should(
+      "have.text",
+      "Ici c'est la troisième note sans cocher. Ce n'est pas très important. Merci"
+    );
+    cy.get(
+      'div:nth-child(2) > [data-testid="note-card"] > div.card-footer > [data-testid="toggle-note-switch"]'
+    ).should("have.class", "form-check-input");
+  });
 });
